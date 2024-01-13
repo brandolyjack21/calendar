@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import AddEventCard from "./addEventCard";
+import AddEventCard from "../components/AddEventCard"
 
 function EventDetails({ day, extractDataForCalendar }) {
   const [dataEvent, setDataEvent] = useState([]);
