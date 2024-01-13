@@ -164,6 +164,7 @@ function AddEventCard({ bringEventData, disguiseCardEvent, day }) {
             onClick={() => {
               savedEvent();
               disguiseCardEvent();
+              reset()
             }}
             className="keep"
           >
