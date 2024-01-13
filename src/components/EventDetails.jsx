@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import AddEventCard from "../components/AddEventCard"
+import ModalDetail from "./ModalDetail";
 
 function EventDetails({ day, extractDataForCalendar }) {
   const [dataEvent, setDataEvent] = useState([]);
   const [updateNewData, setUpdateNewData] = useState(false);
   const [visibilityCardEvents, setVisivilityCardEvents] = useState(false);
   const [ViewDetail, setViewDetail] = useState(false);
+  const [ detailStatus, setDetailStatus ] = useState()
 
   const disguiseCardEvent = () => {
     setVisivilityCardEvents(!visibilityCardEvents);
@@ -15,6 +17,10 @@ function EventDetails({ day, extractDataForCalendar }) {
   const bringEventData = (data) => {
     setUpdateNewData(!updateData);
   };
+
+  const changeStatus = () => {
+    setViewDetail(!ViewDetail)
+  }
 
   const updateData = () => {
     const calendarData = JSON.parse(localStorage.getItem("calendarData"));
@@ -96,7 +102,13 @@ function EventDetails({ day, extractDataForCalendar }) {
                         </span>
                       </div>
                       <div
-                        onClick={() => setViewDetail(!ViewDetail)}
+                        
+                        onClick={() => 
+                          {
+                            setViewDetail(!ViewDetail)
+                            setDetailStatus(data)
+                        }
+                        }
                         className="container-butoon-detalle"
                       >
                         Detalle
@@ -133,125 +145,11 @@ function EventDetails({ day, extractDataForCalendar }) {
         />
       </section>
 
-      <article
-        className={
-          ViewDetail
-            ? "container-modal-detail container-modal-detail-visible"
-            : "container-modal-detail"
-        }
-      >
-        <section className="modal-detail">
-          <article className="modal-detail-header">
-            <div className="modal-detail-header-icon">
-              <div className="container-icon-material-symbols-outlined">
-                <span className="material-symbols-outlined">restaurant</span>
-              </div>
-              <div className="modal-detail-header-type">
-                <div>Carlos Perez</div>
-                <div>6 sibaritas</div>
-              </div>
-              <div>
-                <span onClick={() => setViewDetail(!ViewDetail)} className="material-symbols-outlined">close</span>
-              </div>
-            </div>
-            <div className="modal-detail-header-date">
-              Lunes 15 de septiembre del 2024
-            </div>
-            <div className="modal-detail-header-search">
-              <input placeholder="Buscar..." type="text" />
-            </div>
-          </article>
-          <article className="modal-detail-body">
-            <div className="modal-detail-body-card">
-              <div className="modal-detail-body-card-header">
-                <div className="modal-detail-doby-card-header-icon"></div>
-                <div className="modal-detail-doby-card-header-descrition">
-                  <div className="modal-detail-doby-card-header-descrition-icon">
-                    <span className="material-symbols-outlined">restaurant</span>
-                  </div>
-                  <div className="modal-detail-doby-card-header-descrition-name">
-                    <span>Carlos Perez</span>
-                    <span>6 sibaritas</span>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-detail-doby-card-data">
-                <div>$600</div>
-                <div>9pm 15 de septiembre</div>
-                <div>6 personas</div>
-                <div>Extra</div>
-              </div>
-              <div className="modal-detail-doby-card-options">
-                <button className="modal-detail-doby-card-options-button">
-                  ver
-                </button>
-                <span className="modal-detail-doby-card-options-approved">
-                  aprobado
-                  <div className="modal-detail-doby-card-options-approved-focus"></div>
-                </span>
-              </div>
-            </div>
-            <div className="modal-detail-body-card">
-              <div className="modal-detail-body-card-header">
-                <div className="modal-detail-doby-card-header-icon"></div>
-                <div className="modal-detail-doby-card-header-descrition">
-                  <div className="modal-detail-doby-card-header-descrition-icon">
-                    <span className="material-symbols-outlined">restaurant</span>
-                  </div>
-                  <div className="modal-detail-doby-card-header-descrition-name">
-                    <span>Carlos Perez</span>
-                    <span>6 sibaritas</span>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-detail-doby-card-data">
-                <div>$600</div>
-                <div>9pm 15 de septiembre</div>
-                <div>6 personas</div>
-                <div>Extra</div>
-              </div>
-              <div className="modal-detail-doby-card-options">
-                <button className="modal-detail-doby-card-options-button">
-                  ver
-                </button>
-                <span className="modal-detail-doby-card-options-approved">
-                  aprobado
-                  <div className="modal-detail-doby-card-options-approved-focus"></div>
-                </span>
-              </div>
-            </div>
-            <div className="modal-detail-body-card">
-              <div className="modal-detail-body-card-header">
-                <div className="modal-detail-doby-card-header-icon"></div>
-                <div className="modal-detail-doby-card-header-descrition">
-                  <div className="modal-detail-doby-card-header-descrition-icon">
-                    <span className="material-symbols-outlined">restaurant</span>
-                  </div>
-                  <div className="modal-detail-doby-card-header-descrition-name">
-                    <span>Carlos Perez</span>
-                    <span>6 sibaritas</span>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-detail-doby-card-data">
-                <div>$600</div>
-                <div>9pm 15 de septiembre</div>
-                <div>6 personas</div>
-                <div>Extra</div>
-              </div>
-              <div className="modal-detail-doby-card-options">
-                <button className="modal-detail-doby-card-options-button">
-                  ver
-                </button>
-                <span className="modal-detail-doby-card-options-approved">
-                  aprobado
-                  <div className="modal-detail-doby-card-options-approved-focus"></div>
-                </span>
-              </div>
-            </div>
-          </article>
-        </section>
-      </article>
+      <ModalDetail
+      data={detailStatus}
+      ViewDetail={ViewDetail}
+      changeStatus={changeStatus}
+      />
     </>
   );
 }
